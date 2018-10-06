@@ -62,5 +62,20 @@ contract SupplyChainList {
     function isEggBoxInfected(uint id) view public returns (bool){
         return eggBoxes[id].isInfected;
     }
+    
+    function updateAllInfectedEggBoxes(uint idOfEgg, uint idOfTrack) public {
+        TrackRecord memory trackedRecord = TrackRecord(eggBoxes[idOfEgg].trackRecord[idOfTrack].timestamp, eggBoxes[idOfEgg].trackRecord[idOfTrack].longitude, eggBoxes[idOfEgg].trackRecord[idOfTrack].latitude);
+
+        for (uint i =0; i < eggBoxCounter; i++){
+            EggBox memory eb = eggBoxes[i];
+            for (uint y = 0; y < eb.trackRecord.length; y++){
+                if (eb.trackRecord[y].latitude == trackedRecord.latitude && 
+                    eb.trackRecord[y].longitude == trackedRecord.longitude &&
+                    eb.trackRecord[y].timestamp == trackedRecord.timestamp){
+                        eggBoxes[i].isInfected = true;
+                    }
+            }
+        }
+    }
 
 }
