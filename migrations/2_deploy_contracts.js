@@ -3,5 +3,5 @@ var Greeter = artifacts.require("./Greeter.sol");
 
 module.exports = function(deployer) {
   deployer.deploy(ChainList);
-  deployer.deploy(Greeter);
+  deployer.deploy(Greeter, "Hello");
 }
