@@ -55,4 +55,12 @@ contract SupplyChainList {
             return(eggBoxes[idOfEgg].trackRecord[idOfTrack].timestamp, eggBoxes[idOfEgg].trackRecord[idOfTrack].longitude, eggBoxes[idOfEgg].trackRecord[idOfTrack].latitude);
     }
 
+    function setEggBoxInfected(uint id) public{
+        eggBoxes[id].isInfected = true;
+    }
+
+    function isEggBoxInfected(uint id) view public returns (bool){
+        return eggBoxes[id].isInfected;
+    }
+
 }
