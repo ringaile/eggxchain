@@ -9,10 +9,7 @@ contract SupplyChainList {
       uint id;
       uint barcode;
       address farmer;
-      uint timestamp;
-      uint longitude;
-      uint latitude;
-      uint trackCounter;
+      bool isInfected;
       TrackRecord[] trackRecord;
   }
 
@@ -33,27 +30,25 @@ contract SupplyChainList {
     function createEggBox(uint barcode, uint longitude, uint latitude) public{
         var eggBox = eggBoxes[eggBoxCounter];
 
-        eggBox.barcode = barcode;
         eggBox.farmer = msg.sender;
-        eggBox.timestamp = now;
-        eggBox.longitude = longitude;
-        eggBox.latitude = latitude;
-        eggBox.trackCounter = 0;
+        eggBox.barcode = barcode;
+        eggBox.isInfected = false;
+        TrackRecord memory trackedRecord = TrackRecord(now, longitude, latitude);
+        eggBox.trackRecord.push(trackedRecord);
 
         eggBoxCounter++;
     }
 
     function getEggBox(uint id) view public returns (
-        uint , address , uint , uint , uint ) {
-            return (eggBoxes[id].barcode, eggBoxes[id].farmer, eggBoxes[id].timestamp, eggBoxes[id].longitude, eggBoxes[id].latitude);
+        uint, address , bool, uint , uint , uint ) {
+            return (eggBoxes[id].barcode, eggBoxes[id].farmer, eggBoxes[id].isInfected, eggBoxes[id].trackRecord[0].timestamp, eggBoxes[id].trackRecord[0].longitude, eggBoxes[id].trackRecord[0].latitude);
     }
 
     function setTrackRecord(uint id, uint timestamp, uint longitude, uint latitude) public{
-            var noOfTracks = eggBoxes[id].trackCounter;
+            var noOfTracks = eggBoxes[id].trackRecord.length;
             
             TrackRecord memory trackedRecord = TrackRecord(timestamp, longitude, latitude);
             eggBoxes[id].trackRecord.push(trackedRecord);
-            eggBoxes[id].trackCounter = noOfTracks + 1;
     }
 
     function getTrackRecordOfEggBox(uint idOfEgg, uint idOfTrack) view public returns(uint, uint, uint){
