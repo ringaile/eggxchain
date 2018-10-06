@@ -16,27 +16,38 @@ contract SupplyChainList {
 
   mapping (uint => EggBox) public eggBoxes;
 
+  event LogCreateEggBoxPoint(
+    uint _id,
+    uint _barcode,
+    address _farmer,
+    uint indexed _timestamp,
+    uint indexed _longitude,
+    uint indexed _latitude
+  );
+
   //constructor
   constructor() public {
       contractOwner = msg.sender;
-      eggBoxCounter = 0;
   }
 
-    function createEggBox(uint barcode, uint longitude, uint latitude) public{
-        var eggBox = eggBoxes[eggBoxCounter];
+  function createEggBox(uint _barcode, uint _longitude, uint _latitude) public{
+    uint _timestamp;
+    _timestamp = now;
 
-        eggBox.barcode = barcode;
-        eggBox.farmer = msg.sender;
-        eggBox.timestamp = now;
-        eggBox.longitude = longitude;
-        eggBox.latitude = latitude;
+    eggBoxes[eggBoxCounter] = EggBox(
+      eggBoxCounter,
+      _barcode,
+      msg.sender,
+      now,
+      _longitude,
+      _latitude
+    );
+    emit LogCreateEggBoxPoint(eggBoxCounter, _barcode, msg.sender, _timestamp, _longitude, _latitude);
+    eggBoxCounter++;
+  }
 
-        eggBoxCounter++;
-    }
-
-    function getEggBox(uint id) view public returns (
-        uint , address , uint , uint , uint ) {
-            return (eggBoxes[id].barcode, eggBoxes[id].farmer, eggBoxes[id].timestamp, eggBoxes[id].longitude, eggBoxes[id].latitude);
-    }
-
+  function getEggBox(uint id) view public returns (
+      uint , address , uint , uint , uint ) {
+          return (eggBoxes[id].barcode, eggBoxes[id].farmer, eggBoxes[id].timestamp, eggBoxes[id].longitude, eggBoxes[id].latitude);
+  }
 }
