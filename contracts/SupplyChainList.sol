@@ -2,10 +2,6 @@ pragma solidity ^0.4.18;
 
 contract SupplyChainList {
   // state variable
-  address seller;
-  string name;
-  string description;
-  uint256 price;
   address contractOwner;
   uint eggBoxCounter;
 
@@ -26,29 +22,21 @@ contract SupplyChainList {
       eggBoxCounter = 0;
   }
 
-  //
-  function createEggBox(uint _barcode, uint _longitude, uint _latitude) public{
-      eggBoxes[eggBoxCounter] = EggBox(
-          eggBoxCounter,
-          _barcode,
-          msg.sender,
-          now,
-          _longitude,
-          _latitude
-      );
-      eggBoxCounter++;
+    function createEggBox(uint barcode, uint longitude, uint latitude) public{
+        var eggBox = eggBoxes[eggBoxCounter];
+
+        eggBox.barcode = barcode;
+        eggBox.farmer = msg.sender;
+        eggBox.timestamp = now;
+        eggBox.longitude = longitude;
+        eggBox.latitude = latitude;
+
+        eggBoxCounter++;
     }
 
-
-    function getEggBox(uint id) public view returns (
-        uint _id,
-        uint _barcode,
-        address _farmer,
-        uint _timestamp,
-        uint _longitude,
-        uint _latitude) {
-            EggBox memory eggbox = eggBoxes[id];
-            return (eggbox.id, eggbox.barcode, eggbox.farmer, eggbox.timestamp, eggbox.longitude, eggbox.latitude);
+    function getEggBox(uint id) view public returns (
+        uint , address , uint , uint , uint ) {
+            return (eggBoxes[id].barcode, eggBoxes[id].farmer, eggBoxes[id].timestamp, eggBoxes[id].longitude, eggBoxes[id].latitude);
     }
 
 }
