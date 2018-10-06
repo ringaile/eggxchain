@@ -1,2 +1,2 @@
 # eggxchange
-hack like a girl hackathon
+hack like a girl hackathon.
