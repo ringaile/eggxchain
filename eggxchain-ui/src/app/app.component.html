@@ -61,15 +61,25 @@
     <mat-card-title>General: Get egg box info</mat-card-title>
   </mat-card-header>
   <mat-card-content>
-    <form>
-      <mat-form-field>
-        <input matInput type="number" name="id" placeholder="ID" [(ngModel)]="getEggBoxModel.id" />
-      </mat-form-field>
-      <div>
-        <button mat-button (click)="getEggBox()">Get</button>
-      </div>
-    </form>
-    <div *ngIf="retrievedEggBox">
+    <mat-card>
+      <form>
+        <mat-form-field>
+          <input matInput autocomplete="off" type="number" name="id" placeholder="ID" [(ngModel)]="getEggBoxModel.id" />
+        </mat-form-field>
+        <div>
+          <button mat-button (click)="getEggBox()">Get</button>
+        </div>
+      </form>
+    </mat-card>
+    <mat-card *ngIf="retrievedEggBox">
+      <mat-card-header>
+        <mat-card-title>Choose track record:</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <mat-slider [thumbLabel]="true" tickInterval="1" min="0" max="10" step="1" [ngModel]="getTrackRecordOfEggBoxModel.index" (ngModelChange)="onTrackRecordIndexChanged($event)"></mat-slider>
+      </mat-card-content>
+    </mat-card>
+    <mat-card *ngIf="retrievedEggBox">
       <table>
         <tr>
           <th>Barcode:</th>
@@ -96,6 +106,14 @@
           <td>{{retrievedEggBox.latitude}}</td>
         </tr>
       </table>
-    </div>
+    </mat-card>
+    <mat-card *ngIf="retrievedEggBox">
+      <mat-card-header>
+        <mat-card-title>Mark all boxes at this position as infected:</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <button (click)="updateAllInfectedEggBoxes()">Mark as infected</button>
+      </mat-card-content>
+    </mat-card>
   </mat-card-content>
 </mat-card>

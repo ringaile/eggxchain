@@ -50,6 +50,11 @@ export class AppComponent {
     latitude: number
   };
 
+  getTrackRecordOfEggBoxModel: {
+    eggBoxId?: number,
+    index?: number
+  } = {index: 0};
+
   private supplyChainList: any;
 
   private account: any;
@@ -90,8 +95,8 @@ export class AppComponent {
     this.supplyChainList.setTrackRecord.sendTransaction(
       this.setTrackRecordModel.id,
       new Date().getTime() / 1000,
-      this.createEggBoxModel.longitude * AppComponent.locationDegreeFactor,
-      this.createEggBoxModel.latitude * AppComponent.locationDegreeFactor,
+      this.setTrackRecordModel.longitude * AppComponent.locationDegreeFactor,
+      this.setTrackRecordModel.latitude * AppComponent.locationDegreeFactor,
       this.createTrasactionInfo()
     );
   }
@@ -120,6 +125,36 @@ export class AppComponent {
       longitude: result[4] / AppComponent.locationDegreeFactor,
       latitude: result[5] / AppComponent.locationDegreeFactor
     };
+    this.getTrackRecordOfEggBoxModel.eggBoxId = this.getEggBoxModel.id;
+    this.getTrackRecordOfEggBoxModel.index = 0;
+  }
+
+  async onTrackRecordIndexChanged(newIndex: number) {
+    let result: any;
+    try {
+      result = await this.supplyChainList.getTrackRecordOfEggBox.call(this.getTrackRecordOfEggBoxModel.eggBoxId, newIndex);
+    } catch {
+      if (this.getTrackRecordOfEggBoxModel.index == null) {
+        this.getTrackRecordOfEggBoxModel.index = 0;
+      } else {
+        this.getTrackRecordOfEggBoxModel.index = null;
+      }
+
+      // Index not available, do nothing.
+      return;
+    }
+
+    this.getTrackRecordOfEggBoxModel.index = newIndex;
+    this.retrievedEggBox.timestamp = new Date(result[0] * 1000);
+    this.retrievedEggBox.longitude = result[1] / AppComponent.locationDegreeFactor;
+    this.retrievedEggBox.latitude = result[2] / AppComponent.locationDegreeFactor;
+  }
+
+  updateAllInfectedEggBoxes(): void {
+    this.supplyChainList.updateAllInfectedEggBoxes.sendTransaction(
+      this.getTrackRecordOfEggBoxModel.eggBoxId,
+      this.getTrackRecordOfEggBoxModel.index,
+      this.createTrasactionInfo());
   }
 
   private createTrasactionInfo(): { from: string } {
