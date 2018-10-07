@@ -17,7 +17,29 @@ const artifacts = require('../../../build/contracts/SupplyChainList.json');
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
+  static readonly locationDegreeFactor: number = 100000;
+
   result: string;
+
+  createEggBoxModel: {
+    barcode?: number,
+    longitude?: number,
+    latitude?: number
+  } = {};
+
+  setTrackRecordModel: {
+    id?: number,
+    longitude?: number,
+    latitude?: number
+  } = {};
+
+  setEggBoxInfectedModel: {
+    id?: number
+  };
+
+  private supplyChainList: any;
+
+  private account: any;
 
   constructor(private httpClient: HttpClient) {
     window.addEventListener('load', (event) => {
@@ -31,13 +53,43 @@ export class AppComponent {
     let web3 = new Web3(web3Provider);
     web3.eth.getAccounts((err, accounts) => {
       this.result = accounts.length;
+      this.account = accounts[0];
     });
     //this.httpClient.get("assets/SupplyChainList.json").subscribe(artifacts => {
       let contract = TruffleContract(artifacts);
       contract.setProvider(web3Provider);
       contract.deployed().then(instance => {
-        instance.createEggBox(1, 2, 3);
+        this.supplyChainList = instance;
+        //instance.createEggBox(1, 2, 3, {from: window.web3.eth.accounts[0]});
       });
     //});
+  }
+
+  createEggBox(): void {
+    this.supplyChainList.createEggBox.sendTransaction(
+      this.createEggBoxModel.barcode,
+      this.createEggBoxModel.longitude * AppComponent.locationDegreeFactor,
+      this.createEggBoxModel.latitude * AppComponent.locationDegreeFactor,
+      this.createTrasactionInfo());
+  }
+
+  setTrackRecord(): void {
+    this.supplyChainList.setTrackRecord.sendTransaction(
+      this.setTrackRecordModel.id,
+      this.createEggBoxModel.longitude * AppComponent.locationDegreeFactor,
+      this.createEggBoxModel.latitude * AppComponent.locationDegreeFactor,
+      this.createTrasactionInfo()
+    );
+  }
+
+  setEggBoxInfected(): void {
+    this.supplyChainList.setEggBoxInfected.sendTransaction(
+      this.setEggBoxInfectedModel.id,
+      this.createTrasactionInfo()
+    );
+  }
+
+  private createTrasactionInfo(): { from: string } {
+    return { from: this.account };
   }
 }
