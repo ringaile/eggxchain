@@ -56,3 +56,46 @@
     </form>
   </mat-card-content>
 </mat-card>
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>General: Get egg box info</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <form>
+      <mat-form-field>
+        <input matInput type="number" name="id" placeholder="ID" [(ngModel)]="getEggBoxModel.id" />
+      </mat-form-field>
+      <div>
+        <button mat-button (click)="getEggBox()">Get</button>
+      </div>
+    </form>
+    <div *ngIf="retrievedEggBox">
+      <table>
+        <tr>
+          <th>Barcode:</th>
+          <td>{{retrievedEggBox.barcode}}</td>
+        </tr>
+        <tr>
+          <th>Farmer:</th>
+          <td>{{retrievedEggBox.farmer}}</td>
+        </tr>
+        <tr>
+          <th>Is infected:</th>
+          <td>{{retrievedEggBox.isInfected}}</td>
+        </tr>
+        <tr>
+          <th>Timestamp:</th>
+          <td>{{retrievedEggBox.timestamp}}</td>
+        </tr>
+        <tr>
+          <th>Longitude:</th>
+          <td>{{retrievedEggBox.longitude}}</td>
+        </tr>
+        <tr>
+          <th>Latitude:</th>
+          <td>{{retrievedEggBox.latitude}}</td>
+        </tr>
+      </table>
+    </div>
+  </mat-card-content>
+</mat-card>

@@ -35,6 +35,19 @@ export class AppComponent {
 
   setEggBoxInfectedModel: {
     id?: number
+  } = {};
+
+  getEggBoxModel: {
+    id?: number
+  } = {};
+
+  retrievedEggBox: {
+    barcode: number,
+    farmer: string,
+    isInfected: boolean,
+    timestamp: Date,
+    longitude: number,
+    latitude: number
   };
 
   private supplyChainList: any;
@@ -76,6 +89,7 @@ export class AppComponent {
   setTrackRecord(): void {
     this.supplyChainList.setTrackRecord.sendTransaction(
       this.setTrackRecordModel.id,
+      new Date().getTime() / 1000,
       this.createEggBoxModel.longitude * AppComponent.locationDegreeFactor,
       this.createEggBoxModel.latitude * AppComponent.locationDegreeFactor,
       this.createTrasactionInfo()
@@ -87,6 +101,25 @@ export class AppComponent {
       this.setEggBoxInfectedModel.id,
       this.createTrasactionInfo()
     );
+  }
+
+  async getEggBox() {
+    let result: any;
+    try {
+      result = await this.supplyChainList.getEggBox.call(this.getEggBoxModel.id);
+    } catch {
+      alert("Invalid ID!");
+      return;
+    }
+
+    this.retrievedEggBox = {
+      barcode: result[0],
+      farmer: result[1],
+      isInfected: result[2],
+      timestamp: new Date(result[3] * 1000),
+      longitude: result[4] / AppComponent.locationDegreeFactor,
+      latitude: result[5] / AppComponent.locationDegreeFactor
+    };
   }
 
   private createTrasactionInfo(): { from: string } {
