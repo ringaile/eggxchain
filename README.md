@@ -21,3 +21,10 @@ This is a decentralised solution based on Blockchain Ethereum platform (not only
 * Change to directory "eggxchain-ui".
 * Execute: "ng serve"
 * Open browser: "http://localhost:4200/"
+
+# Contact
+Yen: yen.chiayi@gmail.com
+Julia: iuliia.guk@web.de
+Marko: black-comb@web.de
+Ringaile: ringaile@gmail.com
+Bita: bitaa.re@gmail.com
