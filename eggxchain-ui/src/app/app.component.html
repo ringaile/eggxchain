@@ -32,6 +32,9 @@
           <mat-form-field>
             <input matInput autocomplete="off" type="number" name="id" placeholder="ID" [(ngModel)]="setTrackRecordModel.id" />
           </mat-form-field>
+          <mat-form-field style="width:200px">
+            <input matInput autocomplete="off" type="datetime-local" name="timestamp" placeholder="Timestamp" [(ngModel)]="setTrackRecordModel.timestamp" />
+          </mat-form-field>
           <mat-form-field>
             <input matInput autocomplete="off" type="number" name="longitude" placeholder="Longitude" [(ngModel)]="setTrackRecordModel.longitude" />
           </mat-form-field>

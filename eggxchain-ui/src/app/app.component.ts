@@ -29,6 +29,7 @@ export class AppComponent {
 
   setTrackRecordModel: {
     id?: number,
+    timestamp?: Date,
     longitude?: number,
     latitude?: number
   } = {};
@@ -94,7 +95,7 @@ export class AppComponent {
   setTrackRecord(): void {
     this.supplyChainList.setTrackRecord.sendTransaction(
       this.setTrackRecordModel.id,
-      new Date().getTime() / 1000,
+      new Date(this.setTrackRecordModel.timestamp).getTime() / 1000,
       this.setTrackRecordModel.longitude * AppComponent.locationDegreeFactor,
       this.setTrackRecordModel.latitude * AppComponent.locationDegreeFactor,
       this.createTrasactionInfo()
