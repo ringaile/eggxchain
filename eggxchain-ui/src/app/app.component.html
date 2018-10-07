@@ -1,119 +1,127 @@
+<div class="div-main">
 <h1>eggXchain</h1>
-<mat-card>
-  <mat-card-header>
-    <mat-card-title>Step 1: Create an egg box</mat-card-title>
-  </mat-card-header>
-  <mat-card-content>
-    <form>
-      <mat-form-field>
-        <input matInput type="number" name="barcode" placeholder="Barcode number" [(ngModel)]="createEggBoxModel.barcode" />
-      </mat-form-field>
-      <mat-form-field>
-        <input matInput type="number" name="longitude" placeholder="Initial longitude" [(ngModel)]="createEggBoxModel.longitude" />
-      </mat-form-field>
-      <mat-form-field>
-        <input matInput type="number" name="latitude" placeholder="Initial latitude" [(ngModel)]="createEggBoxModel.latitude" />
-      </mat-form-field>
-      <div>
-        <button mat-button (click)="createEggBox()">Create</button>
-      </div>
-    </form>
-  </mat-card-content>
-</mat-card>
-<mat-card>
-  <mat-card-header>
-    <mat-card-title>Step 2: Push track record</mat-card-title>
-  </mat-card-header>
-  <mat-card-content>
-    <form>
-      <mat-form-field>
-        <input matInput type="number" name="id" placeholder="ID" [(ngModel)]="setTrackRecordModel.id" />
-      </mat-form-field>
-      <mat-form-field>
-        <input matInput type="number" name="longitude" placeholder="Longitude" [(ngModel)]="setTrackRecordModel.longitude" />
-      </mat-form-field>
-      <mat-form-field>
-        <input matInput type="number" name="latitude" placeholder="Latitude" [(ngModel)]="setTrackRecordModel.latitude" />
-      </mat-form-field>
-      <div>
-        <button mat-button (click)="setTrackRecord()">Push</button>
-      </div>
-    </form>
-  </mat-card-content>
-</mat-card>
-<mat-card>
-  <mat-card-header>
-    <mat-card-title>Step 3: Mark egg box as infected</mat-card-title>
-  </mat-card-header>
-  <mat-card-content>
-    <form>
-      <mat-form-field>
-        <input matInput type="number" name="id" placeholder="ID" [(ngModel)]="setEggBoxInfectedModel.id" />
-      </mat-form-field>
-      <div>
-        <button mat-button (click)="setEggBoxInfected()">Send</button>
-      </div>
-    </form>
-  </mat-card-content>
-</mat-card>
-<mat-card>
-  <mat-card-header>
-    <mat-card-title>General: Get egg box info</mat-card-title>
-  </mat-card-header>
-  <mat-card-content>
+<mat-tab-group>
+  <mat-tab label="Providing Data">
     <mat-card>
-      <form>
-        <mat-form-field>
-          <input matInput autocomplete="off" type="number" name="id" placeholder="ID" [(ngModel)]="getEggBoxModel.id" />
-        </mat-form-field>
-        <div>
-          <button mat-button (click)="getEggBox()">Get</button>
-        </div>
-      </form>
-    </mat-card>
-    <mat-card *ngIf="retrievedEggBox">
       <mat-card-header>
-        <mat-card-title>Choose track record:</mat-card-title>
+        <mat-card-title>Create an egg box</mat-card-title>
       </mat-card-header>
       <mat-card-content>
-        <mat-slider [thumbLabel]="true" tickInterval="1" min="0" max="10" step="1" [ngModel]="getTrackRecordOfEggBoxModel.index" (ngModelChange)="onTrackRecordIndexChanged($event)"></mat-slider>
+        <form>
+          <mat-form-field>
+            <input matInput type="number" name="barcode" placeholder="Barcode number" [(ngModel)]="createEggBoxModel.barcode" />
+          </mat-form-field>
+          <mat-form-field>
+            <input matInput type="number" name="longitude" placeholder="Initial longitude" [(ngModel)]="createEggBoxModel.longitude" />
+          </mat-form-field>
+          <mat-form-field>
+            <input matInput type="number" name="latitude" placeholder="Initial latitude" [(ngModel)]="createEggBoxModel.latitude" />
+          </mat-form-field>
+          <div>
+            <button mat-button (click)="createEggBox()">Create</button>
+          </div>
+        </form>
       </mat-card-content>
     </mat-card>
-    <mat-card *ngIf="retrievedEggBox">
-      <table>
-        <tr>
-          <th>Barcode:</th>
-          <td>{{retrievedEggBox.barcode}}</td>
-        </tr>
-        <tr>
-          <th>Farmer:</th>
-          <td>{{retrievedEggBox.farmer}}</td>
-        </tr>
-        <tr>
-          <th>Is infected:</th>
-          <td>{{retrievedEggBox.isInfected}}</td>
-        </tr>
-        <tr>
-          <th>Timestamp:</th>
-          <td>{{retrievedEggBox.timestamp}}</td>
-        </tr>
-        <tr>
-          <th>Longitude:</th>
-          <td>{{retrievedEggBox.longitude}}</td>
-        </tr>
-        <tr>
-          <th>Latitude:</th>
-          <td>{{retrievedEggBox.latitude}}</td>
-        </tr>
-      </table>
-    </mat-card>
-    <mat-card *ngIf="retrievedEggBox">
+    <mat-card>
       <mat-card-header>
-        <mat-card-title>Mark all boxes at this position as infected:</mat-card-title>
+        <mat-card-title>Push track record</mat-card-title>
       </mat-card-header>
       <mat-card-content>
-        <button (click)="updateAllInfectedEggBoxes()">Mark as infected</button>
+        <form>
+          <mat-form-field>
+            <input matInput type="number" name="id" placeholder="ID" [(ngModel)]="setTrackRecordModel.id" />
+          </mat-form-field>
+          <mat-form-field>
+            <input matInput type="number" name="longitude" placeholder="Longitude" [(ngModel)]="setTrackRecordModel.longitude" />
+          </mat-form-field>
+          <mat-form-field>
+            <input matInput type="number" name="latitude" placeholder="Latitude" [(ngModel)]="setTrackRecordModel.latitude" />
+          </mat-form-field>
+          <div>
+            <button mat-button (click)="setTrackRecord()">Push</button>
+          </div>
+        </form>
       </mat-card-content>
     </mat-card>
-  </mat-card-content>
-</mat-card>
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>Mark egg box as infected</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <form>
+          <mat-form-field>
+            <input matInput type="number" name="id" placeholder="ID" [(ngModel)]="setEggBoxInfectedModel.id" />
+          </mat-form-field>
+          <div>
+            <button mat-button (click)="setEggBoxInfected()">Send</button>
+          </div>
+        </form>
+      </mat-card-content>
+    </mat-card>
+  </mat-tab>
+  <mat-tab label="Receiving Data">
+    <mat-card>
+      <mat-card-header>
+        <mat-card-title>General: Get egg box info</mat-card-title>
+      </mat-card-header>
+      <mat-card-content>
+        <mat-card>
+          <form>
+            <mat-form-field>
+              <input matInput autocomplete="off" type="number" name="id" placeholder="ID" [(ngModel)]="getEggBoxModel.id" />
+            </mat-form-field>
+            <div>
+              <button mat-button (click)="getEggBox()">Get</button>
+            </div>
+          </form>
+        </mat-card>
+        <mat-card *ngIf="retrievedEggBox">
+          <mat-card-header>
+            <mat-card-title>Choose track record:</mat-card-title>
+          </mat-card-header>
+          <mat-card-content>
+            <mat-slider [thumbLabel]="true" tickInterval="1" min="0" max="10" step="1" [ngModel]="getTrackRecordOfEggBoxModel.index" (ngModelChange)="onTrackRecordIndexChanged($event)"></mat-slider>
+          </mat-card-content>
+        </mat-card>
+        <mat-card *ngIf="retrievedEggBox">
+          <table>
+            <tr>
+              <th>Barcode:</th>
+              <td>{{retrievedEggBox.barcode}}</td>
+            </tr>
+            <tr>
+              <th>Farmer:</th>
+              <td>{{retrievedEggBox.farmer}}</td>
+            </tr>
+            <tr>
+              <th>Is infected:</th>
+              <td>{{retrievedEggBox.isInfected}}</td>
+            </tr>
+            <tr>
+              <th>Timestamp:</th>
+              <td>{{retrievedEggBox.timestamp}}</td>
+            </tr>
+            <tr>
+              <th>Longitude:</th>
+              <td>{{retrievedEggBox.longitude}}</td>
+            </tr>
+            <tr>
+              <th>Latitude:</th>
+              <td>{{retrievedEggBox.latitude}}</td>
+            </tr>
+          </table>
+        </mat-card>
+        <mat-card *ngIf="retrievedEggBox">
+          <mat-card-header>
+            <mat-card-title>Mark all boxes at this position as infected:</mat-card-title>
+          </mat-card-header>
+          <mat-card-content>
+            <button (click)="updateAllInfectedEggBoxes()">Mark as infected</button>
+          </mat-card-content>
+        </mat-card>
+      </mat-card-content>
+    </mat-card>
+  </mat-tab>
+</mat-tab-group>
+</div>

@@ -8,6 +8,7 @@ import {MatCardModule} from '@angular/material/card';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatSliderModule} from '@angular/material/slider';
 import {MatInputModule} from '@angular/material';
+import {MatTabsModule} from '@angular/material/tabs';
 
 import { AppComponent } from './app.component';
 
@@ -23,7 +24,8 @@ import { AppComponent } from './app.component';
     MatCardModule,
     MatFormFieldModule,
     MatInputModule,
-    MatSliderModule
+    MatSliderModule,
+    MatTabsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
